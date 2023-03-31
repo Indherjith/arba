@@ -14,15 +14,30 @@ import {
 
   export const regiterUser = (payload) => (dispatch) => {
     dispatch({ type: REGISTER_USER_REQUEST });
-  return axios
-    .post(`https://near1499server.herokuapp.com/users`, payload)
-    .then((r) => dispatch({ type: REGISTER_USER_SUCCESS, payload: r }))
-    .catch((err) => dispatch({ type: REGISTER_USER_ERROR, payload: err }));
+  return fetch("https://arbaserver.onrender.com/signup", {
+    method: "post",
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+
+    body: JSON.stringify(payload)
+  })
+  .then( (res) => { 
+    let data = res.json() .then(res=>{console.log(res)
+    alert(res.msg);
+    saveLocalData("token",res.token)
+  })
+    
+  })
+  .catch((err)=>{
+    alert(err);
+  })
   };
 
   export const checkUser = (payload) => async(dispatch) => {
     dispatch({ type: CHECK_REGISTER_USER_REQUEST });
-  return fetch("http://localhost:5000/login", {
+  return fetch("https://arbaserver.onrender.com/login", {
           method: "post",
           headers: {
             'Accept': 'application/json',
@@ -33,11 +48,13 @@ import {
         })
         .then( (res) => { 
           let data = res.json() .then(res=>{console.log(res)
-          alert(res.msg)})
-          
+          alert(res.msg);
+          saveLocalData("token",res.token)
+        })          
         })
         .catch((err)=>{
           console.log(err);
+          alert("Something went wrong");
         })
   };
 

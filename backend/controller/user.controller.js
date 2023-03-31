@@ -44,7 +44,7 @@ const login =  async(req, res) => {
     let hash = user.password;
     bcrypt.compare(password,hash,function(err,result){
         if(err){
-            res.send(err)
+            res.send({"msg":err})
         }
         else if(result){
             var token = jwt.sign({email:email},'secret');
@@ -52,7 +52,7 @@ const login =  async(req, res) => {
             res.send({"user":user.userName,"msg":"login successfull","token":token})
         }
         else{
-            res.send("Login failed, invalid credentials")
+            res.send({"msg":"Login failed, invalid credentials"})
         }
     })
 }
