@@ -25,7 +25,7 @@ const register = async (req, res) => {
             })
             try{
                 await user.save()
-                res.json({msg : "Signup successfull"})
+                res.send({msg : "Signup successfull"})
             }
             catch(err){
                 console.log(err)
@@ -41,20 +41,20 @@ const login =  async (req, res) => {
     // res.send(req.body)
     const {email, password} = req.body;
     const user = await UserModel.findOne({email})
-    // res.send(user)
-    const hash = user.password
-    bcrypt.compare(password, hash, function(err, result) {
-        if(err){
-            res.send("Something went wrong, plz try again later")
-        }
-        if(result){
-            const token = jwt.sign({ userId : user._id }, process.env.JWT_SECRET);
-            res.send({message : "Login successfull", token})
-        }
-        else{
-            res.send("Invalid credentials, plz signup if you haven't")
-        }
-    });
+    res.send(user)
+    // const hash = user.password
+    // bcrypt.compare(password, hash, function(err, result) {
+    //     if(err){
+    //         res.send("Something went wrong, plz try again later")
+    //     }
+    //     if(result){
+    //         const token = jwt.sign({ userId : user._id }, process.env.JWT_SECRET);
+    //         res.send({message : "Login successfull", token})
+    //     }
+    //     else{
+    //         res.send("Invalid credentials, plz signup if you haven't")
+    //     }
+    // });
     
 }
 
