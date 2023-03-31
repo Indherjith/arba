@@ -41,8 +41,9 @@ const login =  async (req, res) => {
     // res.send(req.body)
     const {email, password} = req.body;
     const user = await UserModel.findOne({email})
-    res.send(user)
-    // const hash = user.password
+    const hash = user.password
+    res.send({hash,user})
+    
     // bcrypt.compare(password, hash, function(err, result) {
     //     if(err){
     //         res.send("Something went wrong, plz try again later")
