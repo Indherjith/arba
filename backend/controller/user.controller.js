@@ -42,19 +42,21 @@ const login =  async(req, res) => {
     let {email,password} = req.body;
     let user = await UserModel.findOne({email})
     let hash = user.password;
-    bcrypt.compare(password,hash,function(err,result){
-        if(err){
-            res.send({"msg":err})
-        }
-        else if(result){
-            var token = jwt.sign({email:email},'secret');
-            console.log(token);
-            res.send({"user":user.userName,"msg":"login successfull","token":token})
-        }
-        else{
-            res.send({"msg":"Login failed, invalid credentials"})
-        }
-    })
+    if(user == null){
+        res.send({"msg":"User not exit"})
+    }
+    else{
+        bcrypt.compare(password,hash,function(err,result){
+            if(result){
+                var token = jwt.sign({email:email},'secret');
+                console.log(token);
+                res.send({"user":user.userName,"msg":"login successfull","token":token})
+            }
+            else{
+                res.send({"msg":"Login failed, invalid credentials"})
+            }
+        })
+    }
 }
 
 module.exports = {register,login}

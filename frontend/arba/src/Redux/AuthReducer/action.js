@@ -50,7 +50,10 @@ import {
           let data = res.json() .then(res=>{console.log(res)
           alert(res.msg);
           saveLocalData("token",res.token)
-        })          
+        })    
+        .catch(err=>{
+          console.log("try",err);
+        })      
         })
         .catch((err)=>{
           console.log(err);
