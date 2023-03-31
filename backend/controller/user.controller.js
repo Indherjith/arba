@@ -42,7 +42,7 @@ const login =  async (req, res) => {
     const {email, password} = req.body;
     const user = await UserModel.findOne({email})
     const hash = user.password
-    res.send({hash,user})
+    res.json({hash,user})
     
     // bcrypt.compare(password, hash, function(err, result) {
     //     if(err){
