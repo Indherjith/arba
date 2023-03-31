@@ -41,11 +41,11 @@ const register = async (req, res) => {
 const login =  async(req, res) => {
     let {email,password} = req.body;
     let user = await UserModel.findOne({email})
-    let hash = user.password;
     if(user == null){
         res.send({"msg":"User not exit"})
     }
     else{
+        let hash = user.password;
         bcrypt.compare(password,hash,function(err,result){
             if(result){
                 var token = jwt.sign({email:email},'secret');

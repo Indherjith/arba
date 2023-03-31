@@ -52,7 +52,7 @@ import {
           saveLocalData("token",res.token)
         })    
         .catch(err=>{
-          console.log("try",err);
+          console.log("try",err.msg);
         })      
         })
         .catch((err)=>{
