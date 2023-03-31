@@ -40,9 +40,9 @@ const register = async (req, res) => {
 const login =  async (req, res) => {
     // res.send(req.body)
     const {email, password} = req.body;
-    const user = await UserModel.findOne({email})
+    const user = UserModel.findOne({email})
     const hash = user.password
-    res.send("working")
+    res.send(user)
     
     // bcrypt.compare(password, hash, function(err, result) {
     //     if(err){
