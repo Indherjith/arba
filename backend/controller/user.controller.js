@@ -7,6 +7,7 @@ const register = async (req, res) => {
     const {fullName,userName,email, password, avatar} = req.body;
 
     const userexits = await UserModel.findOne({email})
+    console.log(userexits);
     //TODO
     if(userexits?.email){
         res.send({"msg" : "Try loggin in, already exist"})
@@ -38,22 +39,22 @@ const register = async (req, res) => {
 }
 
 const login =  async(req, res) => {
-    // res.send(req.body)
-    const {email, password} = req.body;
-    const user = await  UserModel.findOne({email})
-    
-    const hash = user.password  
+    let {email,password} = req.body;
+    let user = await UserModel.findOne({email})
+    let hash = user.password;
     bcrypt.compare(password,hash,function(err,result){
-        if(result){
+        if(err){
+            res.send(err)
+        }
+        else if(result){
             var token = jwt.sign({email:email},'secret');
             console.log(token);
-            res.send({"msg":"Login Successfull","token":token})
+            res.send({"user":user.userName,"msg":"login successfull","token":token})
         }
         else{
             res.send("Login failed, invalid credentials")
         }
     })
-    
 }
 
 module.exports = {register,login}

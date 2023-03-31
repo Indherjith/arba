@@ -22,7 +22,7 @@ import {
 
   export const checkUser = (payload) => async(dispatch) => {
     dispatch({ type: CHECK_REGISTER_USER_REQUEST });
-  return fetch("https://arbaserver.onrender.com/login", {
+  return fetch("http://localhost:5000/login", {
           method: "post",
           headers: {
             'Accept': 'application/json',
@@ -32,11 +32,9 @@ import {
           body: JSON.stringify(payload)
         })
         .then( (res) => { 
-          let data = res.json();
-          data.then(res=>{
-            saveLocalData("token",res.token)
-            alert(res.message)
-          })
+          let data = res.json() .then(res=>{console.log(res)
+          alert(res.msg)})
+          
         })
         .catch((err)=>{
           console.log(err);
