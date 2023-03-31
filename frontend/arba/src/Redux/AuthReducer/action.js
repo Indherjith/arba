@@ -10,6 +10,8 @@ import {
 
   import axios from "axios";
 
+  import {saveLocalData} from "../../Utils/localStorage"
+
   export const regiterUser = (payload) => (dispatch) => {
     dispatch({ type: REGISTER_USER_REQUEST });
   return axios
@@ -20,14 +22,25 @@ import {
 
   export const checkUser = (payload) => async(dispatch) => {
     dispatch({ type: CHECK_REGISTER_USER_REQUEST });
-  return axios
-    .post(`https://arbaserver.onrender.com/auth/login`,payload)
-    .then((r) =>
-      console.log(r)
-    )
-    .catch((err) =>
-      dispatch({ type: CHECK_REGISTER_USER_ERROR, payload: err })
-    );
+  return fetch("http://localhost:5000/login", {
+          method: "post",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+
+          body: JSON.stringify(payload)
+        })
+        .then( (res) => { 
+          let data = res.json();
+          data.then(res=>{
+            saveLocalData("token",res.token)
+            alert(res.message)
+          })
+        })
+        .catch((err)=>{
+          console.log(err);
+        })
   };
 
   export const logout = () => (dispatch) => {
