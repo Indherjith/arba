@@ -22,7 +22,7 @@ import {
 
   export const checkUser = (payload) => async(dispatch) => {
     dispatch({ type: CHECK_REGISTER_USER_REQUEST });
-  return fetch("http://localhost:5000/login", {
+  return fetch("https://arbaserver.onrender.com/login", {
           method: "post",
           headers: {
             'Accept': 'application/json',
