@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const {UserModel} = require("../Model/user.model")
+const nodemailer = require("nodemailer");
 
 const register = async (req, res) => {
     const {fullName,userName,email, password, avatar} = req.body;
@@ -50,7 +51,7 @@ const login =  async(req, res) => {
             if(result){
                 var token = jwt.sign({email:email},'secret');
                 console.log(token);
-                res.send({"user":user.userName,"msg":"login successfull","token":token})
+                res.send({"user":user,"msg":"login successfull","token":token})
             }
             else{
                 res.send({"msg":"Login failed, invalid credentials"})
@@ -59,4 +60,31 @@ const login =  async(req, res) => {
     }
 }
 
-module.exports = {register,login}
+const ResetLink = async(req,res)=>{
+    let {email} = req.body;
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'indher26@gmail.com',
+          pass: 'dgwawnrtaqtlvcji'
+        }
+      });
+      
+      var mailOptions = {
+        from: 'indher26@gmail.com',
+        to: email,
+        subject: 'Sending Email using Node.js',
+        text: 'That was easy!'
+      };
+      
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+          res.send({"msg":"Reset Link is send to your mail_Id."})
+        }
+      });
+}
+
+module.exports = {register,login,ResetLink}

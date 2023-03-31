@@ -1,5 +1,5 @@
 const {Router} = require("express");
-const {register,login}  = require("../controller/user.controller")
+const {register,login,ResetLink}  = require("../controller/user.controller")
 const userRouter = Router();
 
 userRouter.get("/",(req,res)=>{
@@ -9,6 +9,8 @@ userRouter.get("/",(req,res)=>{
 userRouter.post("/signup",register);
 
 userRouter.post("/login",login);
+
+userRouter.post('/Resetpassword',ResetLink)
 
 module.exports = {
     userRouter

@@ -12,6 +12,25 @@ import {
 
   import {saveLocalData} from "../../Utils/localStorage"
 
+  export const reset =(payload)=>(dispatch)=>{
+    return fetch("https://arbaserver.onrender.com/Resetpassword",{
+    method:"post",
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+    }).then( (res) => { 
+      res.json() .then(res=>{console.log(res)
+      alert(res.msg);
+    })
+      
+    })
+    .catch((err)=>{
+      alert(err);
+    })
+  }
+
   export const regiterUser = (payload) => (dispatch) => {
     dispatch({ type: REGISTER_USER_REQUEST });
   return fetch("https://arbaserver.onrender.com/signup", {
