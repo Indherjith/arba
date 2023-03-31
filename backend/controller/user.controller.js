@@ -40,9 +40,9 @@ const register = async (req, res) => {
 const login =  async (req, res) => {
     // res.send(req.body)
     const {email, password} = req.body;
-    const user = await UserModel.findOne({email})
+    // const user = await UserModel.findOne({email})
 
-    res.json(user || {msg:"notworking"})
+    res.json(await UserModel.findOne({email}))
     
     // const hash = user.password  
     // try{
