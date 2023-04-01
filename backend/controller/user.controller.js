@@ -63,7 +63,7 @@ const login =  async(req, res) => {
 
 const ResetLink = async(req,res)=>{
     let {email} = req.body; 
-    let data =await UserModel.findOne()
+    let data =await UserModel.findOne({email})
     if(data == null){
         res.send({"msg":"User Not Exits!"})
     }
