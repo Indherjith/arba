@@ -62,8 +62,7 @@ const login =  async(req, res) => {
 }
 
 const ResetLink = async(req,res)=>{
-    let {_id} = req.body;
-    let {email} =await UserModel.findOne({_id})
+    let {email} =await UserModel.findOne(req.body)
     console.log(email);
     var transporter = nodemailer.createTransport({
         service: 'gmail',

@@ -11,7 +11,7 @@ userRouter.post("/signup",register);
 
 userRouter.post("/login",login);
 
-userRouter.post('/Resetpassword',authentication,ResetLink)
+userRouter.post('/Resetpassword',ResetLink)
 
 module.exports = {
     userRouter
