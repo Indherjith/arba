@@ -52,7 +52,7 @@ const login =  async(req, res) => {
             }
             if(result){
                 const token = jwt.sign({ userId : user._id }, process.env.JWT_SECRET);
-                res.json({msg : "Login successfull", token})
+                res.json({msg : "Login successfull", token,user})
             }
             else{
                 res.send({"msg":"Invalid credentials, plz signup if you haven't"})
@@ -94,4 +94,60 @@ const ResetLink = async(req,res)=>{
     }
 }
 
-module.exports = {register,login,ResetLink}
+const update = async(req,res)=>{
+    let {_id,password}=(req.body);
+    let user = await UserModel.findOne({_id});
+    let fullName = req.body.fullName || user.fullName;
+    let userName = req.body.userName || user.userName;
+    let avatar = req.body.avatar || user.avatar;
+    if(req.body.password){
+        bcrypt.hash(req.body.password, 5, async function(err, hash) {
+            if(err){
+                res.send("Something went wrong, plz try again later")
+            }
+            else{
+                const updates = {fullName,userName,password:hash,avatar}
+                // console.log(updates);
+                try{
+                    UserModel.updateOne({
+                        _id
+                    }, {
+                        $set: {
+                            "fullName": fullName,
+                            "userName": userName,
+                            "password": hash,
+                            "avatar":avatar
+                        }
+                    })
+                    res.send({"msg":"Profile Updated Successfully"})
+                }
+                catch(e){
+                    res.send("Update failed")
+                }
+                
+            }
+        })
+    }
+    else{
+        const updates = {fullName,userName,password,avatar}
+        try{
+            UserModel.updateOne({
+                _id
+            }, {
+                $set: {
+                    "fullName": fullName,
+                    "userName": userName,
+                    "password": password,
+                    "avatar":avatar
+                }
+            })
+            res.send({"msg":"Profile Updated Successfully"})
+        }
+        catch(e){
+            res.send("Update failed")
+        }
+    }
+    
+}
+
+module.exports = {register,login,ResetLink,update}

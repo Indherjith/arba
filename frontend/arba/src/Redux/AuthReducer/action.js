@@ -1,7 +1,7 @@
 import {
-    CHECK_REGISTER_USER_ERROR,
-    CHECK_REGISTER_USER_REQUEST,
-    CHECK_REGISTER_USER_SUCCESS,
+    LOGIN_ERROR,
+    LOGIN_REQUEST,
+    LOGIN_SUCCESS,
     LOGOUT_USER,
     REGISTER_USER_ERROR,
     REGISTER_USER_REQUEST,
@@ -9,6 +9,8 @@ import {
   } from "./action.type";
 
   import axios from "axios";
+
+  import { useNavigate } from "react-router-dom";
 
 
   import {saveLocalData} from "../../Utils/localStorage"
@@ -22,10 +24,12 @@ import {
     },
     body: JSON.stringify(payload)
     }).then( (res) => { 
-      res.json() .then(res=>{console.log(res)
-      alert(res.msg);
-    })
-      
+      res.json() .then(res=>{
+        alert(res.msg)
+        if(res.msg !== "User Not Exits!"){
+            window.location.href="/"
+        }
+      })
     })
     .catch((err)=>{
       alert(err);
@@ -56,7 +60,8 @@ import {
   };
 
   export const checkUser = (payload) => async(dispatch) => {
-    dispatch({ type: CHECK_REGISTER_USER_REQUEST });
+    
+    dispatch({ type: LOGIN_REQUEST });
   return fetch("https://arbaserver.onrender.com/login", {
           method: "post",
           headers: {

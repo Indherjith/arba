@@ -11,7 +11,6 @@ const authentication = (req, res, next) => {
                 res.send("Please login")
             }
             else{
-                console.log(decoded);
                 req.body._id = decoded.userId
                 next();
             }

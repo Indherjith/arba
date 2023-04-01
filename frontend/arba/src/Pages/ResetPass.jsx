@@ -9,12 +9,12 @@ const ResetPass = () => {
     const navigate = useNavigate();
     const handlereset=()=>{
         dispatch(reset({email}))
-        navigate("/")
+        setEmail("");
     }
   return (
     <div>
         <h1>Enter your Email_Id here...</h1>
-        <input type="email" onChange={e=>setEmail(e.target.value)} />
+        <input type="email"  onChange={e=>setEmail(e.target.value)} value={email} />
         <button onClick={handlereset}>Get Reset Link</button>
     </div>
   )

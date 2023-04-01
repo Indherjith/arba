@@ -1,5 +1,5 @@
 const {Router} = require("express");
-const {register,login,ResetLink}  = require("../controller/user.controller")
+const {register,login,ResetLink, update}  = require("../controller/user.controller")
 const userRouter = Router();
 const {authentication} = require("../middleware/authentification")
 
@@ -12,6 +12,8 @@ userRouter.post("/signup",register);
 userRouter.post("/login",login);
 
 userRouter.post('/Resetpassword',ResetLink)
+
+userRouter.post("/update",authentication,update)
 
 module.exports = {
     userRouter
