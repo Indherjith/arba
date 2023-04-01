@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {useDispatch,useSelector} from "react-redux";
 import {checkUser} from "../Redux/AuthReducer/action"
+import { Link } from "react-router-dom";
 
 const Login = () => {
 
@@ -27,6 +28,10 @@ const Login = () => {
                 <input onChange={(e)=>setPassword(e.target.value)} type="email" id="pass" />
             </div>
             <button onClick={handleLogin}>Login</button>
+            <div style={{width:"350px",margin:"auto",display:"flex",justifyContent:"space-evenly"}}>
+                <Link to={"/Resetpassword"} >Forgot password</Link>
+                <Link to={"/signup"} >New User</Link>
+            </div>
         </div>
     </div>
   )

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import {useDispatch,useSelector} from "react-redux";
 import {regiterUser} from "../Redux/AuthReducer/action"
+import { Link } from "react-router-dom";
+import "./Signup.css"
 
 const Signup = () => {
   const dispatch = useDispatch();
@@ -39,6 +41,9 @@ const Signup = () => {
                 <input onChange={(e)=>setAvatar(e.target.value)} type="text" id="avatar" />
             </div>
             <button onClick={handlesignup}>Signup</button>
+            <div>
+              <Link to={"/login"} >Already an user</Link>
+            </div>
         </div>
     </div>
   )

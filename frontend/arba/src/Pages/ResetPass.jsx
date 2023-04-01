@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
 import {useDispatch} from "react-redux"
 import { reset } from '../Redux/AuthReducer/action';
+import { useNavigate } from 'react-router-dom';
 
 const ResetPass = () => {
     const [email,setEmail] = useState("");
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const handlereset=()=>{
         dispatch(reset({email}))
+        navigate("/")
     }
   return (
     <div>

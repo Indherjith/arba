@@ -8,9 +8,8 @@ const register = async (req, res) => {
     const {fullName,userName,email, password, avatar} = req.body;
 
     const userexits = await UserModel.findOne({email})
-    console.log(userexits);
-    //TODO
-    if(userexits?.email){
+    
+    if(userexits != null){
         res.send({"msg" : "Try loggin in, already exist"})
     } else{
 
@@ -40,28 +39,32 @@ const register = async (req, res) => {
 }
 
 const login =  async(req, res) => {
-    let {email,password} = req.body;
-    let user = await UserModel.findOne({email})
-    if(user == null){
-        res.send({"msg":"User not exit"})
+    const {email, password} = req.body;
+    const user = await UserModel.findOne({email})
+    if(user === null){
+        res.send({"msg":"User Not Exit!"})
     }
     else{
-        let hash = user.password;
-        bcrypt.compare(password,hash,function(err,result){
+        const hash = user.password
+        bcrypt.compare(password, hash, function(err, result) {
+            if(err){
+                res.send({"msg":"Something went wrong, plz try again later"})
+            }
             if(result){
-                var token = jwt.sign({email:email},'secret');
-                console.log(token);
-                res.send({"user":user,"msg":"login successfull","token":token})
+                const token = jwt.sign({ userId : user._id }, process.env.JWT_SECRET);
+                res.json({msg : "Login successfull", token})
             }
             else{
-                res.send({"msg":"Login failed, invalid credentials"})
+                res.send({"msg":"Invalid credentials, plz signup if you haven't"})
             }
-        })
+        });
     }
 }
 
 const ResetLink = async(req,res)=>{
-    let {email} = req.body;
+    let {_id} = req.body;
+    let {email} =await UserModel.findOne({_id})
+    console.log(email);
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {

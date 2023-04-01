@@ -14,7 +14,7 @@ const MainRoutes = () => {
             <Route path='/' element={<HomePage/>} />
             <Route path='/login' element={<Login/>} />
             <Route path='/signup' element={<Signup />} />
-            <Route path='Resetpassword' element={<ResetPass/>} />
+            <Route path='/Resetpassword' element={<ResetPass/>} />
         </Routes>
     </div>
   )

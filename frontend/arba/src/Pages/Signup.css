@@ -1,0 +1,52 @@
+.body{
+    border:1px solid red;
+    width:300px;
+    margin: auto;
+    padding:20px;
+    background-color: lightblue;
+    border:none;
+    border-radius: 20px;
+}
+
+@media all and (max-width:350px){
+    .body{
+        width:80%;
+    }
+}
+
+.body div{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    margin-top: 20px;
+}
+
+.body div input{
+    padding:5px;
+    border:none;
+}
+
+.body div label{
+    margin-top: 4px;
+    font-weight: bold;
+    color: antiquewhite;
+}
+
+.body button {
+    margin-top: 20px;
+    padding:10px 20px;
+    border-radius: 20px;
+    font: 20px bold;
+    font-family: sans-serif;
+    color:white;
+    background-color: blue;
+    border: none;
+}
+
+.body button:hover{
+    background-color:green;
+}
+
+Link{
+    font: 20px ;
+}
