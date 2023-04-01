@@ -62,31 +62,36 @@ const login =  async(req, res) => {
 }
 
 const ResetLink = async(req,res)=>{
-    let {email} =await UserModel.findOne(req.body)
-    console.log(email);
-    var transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: 'indher26@gmail.com',
-          pass: 'dgwawnrtaqtlvcji'
-        }
-      });
-      
-      var mailOptions = {
-        from: 'indher26@gmail.com',
-        to: email,
-        subject: 'Sending Email using Node.js',
-        text: 'That was easy!'
-      };
-      
-      transporter.sendMail(mailOptions, function(error, info){
-        if (error) {
-          console.log(error);
-        } else {
-          console.log('Email sent: ' + info.response);
-          res.send({"msg":"Reset Link is send to your mail_Id."})
-        }
-      });
+    let {email} = req.body; 
+    let data =await UserModel.findOne()
+    if(data == null){
+        res.send({"msg":"User Not Exits!"})
+    }
+    else{
+        var transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+            user: 'indher26@gmail.com',
+            pass: 'dgwawnrtaqtlvcji'
+            }
+        });
+        
+        var mailOptions = {
+            from: 'indher26@gmail.com',
+            to: email,
+            subject: 'Sending Email using Node.js',
+            text: 'That was easy!'
+        };
+        
+        transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+            console.log(error);
+            } else {
+            console.log('Email sent: ' + info.response);
+            res.send({"msg":"Reset Link is send to your mail_Id."})
+            }
+        });
+    }
 }
 
 module.exports = {register,login,ResetLink}
